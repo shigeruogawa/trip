@@ -1,0 +1,47 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_URI")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model seat {
+  id Int @id @default(autoincrement())
+  car_count Int
+  seat_count Int
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+  deleted_at DateTime?
+  shinkansen shinkansen[]
+}
+
+model shinkansen {
+  id Int @id @default(autoincrement())
+  seat_id Int @unique
+  seat seat @relation(fields: [seat_id], references: [id], onDelete: Cascade)
+  name String @unique
+  picture String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+  deleted_at DateTime?
+  reservations reservation[]
+}
+
+model reservation {
+  id Int @id @default(autoincrement())
+  shinkansen_id Int
+  shinkansen shinkansen @relation(fields: [shinkansen_id], references: [id], onDelete: Cascade)
+  departure String
+  destination String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+  deleted_at DateTime?
+}

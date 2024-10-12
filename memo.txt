@@ -1,0 +1,22 @@
+
+INSERT INTO
+  shinkansen(name, picture)
+VALUES(
+  'のぞみ'
+  , ''
+);
+
+INSERT INTO
+  reservation("shinkansenId", "from", destination)
+VALUES(
+  1
+  , '東京'
+  , '弘前'
+);
+
+
+INSERT INTO
+  seat("shinkansenId", car_count, seat_count)
+VALUES(1, 5, 70);
+
+postgresql://root:B6ikxmJ3@localhost:5433/postgres?schema=public
